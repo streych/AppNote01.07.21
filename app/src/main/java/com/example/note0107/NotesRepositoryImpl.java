@@ -20,13 +20,6 @@ public class NotesRepositoryImpl implements NotesRepository {
         notes.add(new Note("9", "Заметка 10", "10-01-2021", "Заметка 10"));
     }
 
-
-
-    public static final NotesRepository INSTANCE  = new NotesRepositoryImpl();
-
-
-
-
     @Override
     public void getNotes(CallBack<List<Note>> callback) {
         callback.onSucess(notes);

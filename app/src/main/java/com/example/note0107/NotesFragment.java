@@ -20,7 +20,7 @@ import java.util.List;
 public class NotesFragment extends Fragment {
     public static final String TAG = "NotesFragment";
     private Adapter adapter;
-    private NotesRepository repository = NotesRepositoryImpl.INSTANCE;
+    private NotesRepository repository = NotesFirebaseRepository.INSTANCE;
 
 
     public static NotesFragment newInstance() {
