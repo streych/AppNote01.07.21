@@ -2,7 +2,7 @@ package com.example.note0107;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
 public class NotesRepositoryImpl implements NotesRepository {
 
     private final ArrayList<Note> notes = new ArrayList<>();
@@ -25,4 +25,4 @@ public class NotesRepositoryImpl implements NotesRepository {
         callback.onSucess(notes);
     }
 
-}
+}*/
