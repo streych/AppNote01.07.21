@@ -70,7 +70,6 @@ public class DetailFragment extends Fragment {
                         @Override
                         public void onSucess(Object result) {
                             notesAdapter.delteNote(note);
-                            //notesAdapter.notifyItemRemoved(1);
 
                         }
                     });
@@ -81,8 +80,6 @@ public class DetailFragment extends Fragment {
                             notesAdapter.notifyItemRemoved(index);
                         }
                     });
-                    //repository.update(note, titleUp.getText().toString(), date, descriptionUp.getText().toString());
-                    //repository.update(note.getId(), titleUp.getText().toString(), date, descriptionUp.getText().toString());
                     notesAdapter.notifyDataSetChanged();
                 }
             });
