@@ -28,16 +28,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         router = new Router(getSupportFragmentManager());
         if (savedInstanceState == null){
-            router.showAuth();
+            //router.showAuth();
+            router.showNotes();
         }
 
-        getSupportFragmentManager().setFragmentResultListener(AuthFragment.AUTH_RESULT, this, new FragmentResultListener() {
+        /*getSupportFragmentManager().setFragmentResultListener(AuthFragment.AUTH_RESULT, this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey,
                                          @NonNull Bundle result) {
                 router.showNotes();
             }
-        });
+        });*/
     }
 
     @Override

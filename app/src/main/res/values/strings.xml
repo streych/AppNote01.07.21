@@ -11,4 +11,8 @@
     <string name="settings_text">Скоро будем</string>
     <string name="future">Скоро будем</string>
     <string name="action_delete">Удалить</string>
+    <string name="titleDelete">Удаление</string>
+    <string name="deleteMessage">Внимание!</string>
+    <string name="btn_positive">Удалить</string>
+    <string name="btn_negative">Отмена</string>
 </resources>
