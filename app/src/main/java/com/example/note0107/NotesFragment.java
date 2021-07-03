@@ -21,7 +21,6 @@ public class NotesFragment extends Fragment {
     public static final String TAG = "NotesFragment";
     private Adapter adapter;
     private final NotesRepository repository = NotesFirebaseRepository.INSTANCE;
-    FragmentManager fragmentManager;
     private int longClickedIndex;
     private Note longClickedNote;
 
