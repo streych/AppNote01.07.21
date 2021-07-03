@@ -37,6 +37,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         notes.remove(longClickedNote);
     }
 
+    private void update(Note note){
+        for (int i = 0; i < notes.size(); i++){
+            Note item = notes.get(i);
+            if (item.getId().equals(note.getId())){
+                notes.remove(i);
+                notes.add(i, note);
+            }
+        }
+    }
+
     public interface OnNoteClickedListener{
         void onOnNoteClickedListener(@NonNull Note note);
     }

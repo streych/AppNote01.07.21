@@ -10,7 +10,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,9 +48,8 @@ public class NotesFirebaseRepository implements NotesRepository{
     }
 
     @Override
-    public Note update(Note note, String title, String data, String desc) {
+    public void update(Note note, String title, String data, String desc) {
 
-        return null;
     }
 
     @Override

@@ -66,8 +66,24 @@ public class DetailFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //continue
+                    repository.remove(note, new CallBack<Object>() {
+                        @Override
+                        public void onSucess(Object result) {
+                            notesAdapter.delteNote(note);
+                            //notesAdapter.notifyItemRemoved(1);
+
+                        }
+                    });
+                    repository.add(titleUp.getText().toString(), date, descriptionUp.getText().toString(), new CallBack<Note>() {
+                        @Override
+                        public void onSucess(Note result) {
+                            int index = notesAdapter.add(result);
+                            notesAdapter.notifyItemRemoved(index);
+                        }
+                    });
+                    //repository.update(note, titleUp.getText().toString(), date, descriptionUp.getText().toString());
                     //repository.update(note.getId(), titleUp.getText().toString(), date, descriptionUp.getText().toString());
-                    //notesAdapter.notifyDataSetChanged();
+                    notesAdapter.notifyDataSetChanged();
                 }
             });
 
