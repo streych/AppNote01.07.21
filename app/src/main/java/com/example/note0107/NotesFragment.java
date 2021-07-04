@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class NotesFragment extends Fragment {
@@ -23,6 +27,7 @@ public class NotesFragment extends Fragment {
     private final NotesRepository repository = NotesFirebaseRepository.INSTANCE;
     private int longClickedIndex;
     private Note longClickedNote;
+    private Router router;
 
     public static NotesFragment newInstance() {
         return new NotesFragment();
@@ -32,6 +37,7 @@ public class NotesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new Adapter(this);
+        router =new Router(getActivity().getSupportFragmentManager());
         repository.getNotes(new CallBack<List<Note>>() {
             @Override
             public void onSucess(List<Note> result) {
@@ -43,9 +49,42 @@ public class NotesFragment extends Fragment {
         adapter.setListener(new Adapter.OnNoteClickedListener() {
             @Override
             public void onOnNoteClickedListener(@NonNull Note note) {
-                if (NotesFragment.this.requireActivity() instanceof  MainActivity){
-                    MainActivity mainActivity = (MainActivity) NotesFragment.this.requireActivity();
-                    mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.container, DetailFragment.newInstance(note)).addToBackStack(null).commit();
+
+
+                if (NotesFragment.this.requireActivity() instanceof  MainActivity) {
+                    View view = LayoutInflater.from(requireContext()).inflate(R.layout.detail_note_dialog, null, false);
+                    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                    String date = format.format(Calendar.getInstance().getTime());
+                    EditText textDialTitle = view.findViewById(R.id.newTitlesD);
+                    TextView textDialDesc = view.findViewById(R.id.newDescriptionsD);
+                    textDialDesc.setText(note.getDescription());
+                    textDialTitle.setText(note.getTitle());
+                    AlertDialog.Builder builderDetail = new AlertDialog.Builder(requireContext())
+                            .setTitle(R.string.title)
+                            .setView(view)
+                            .setPositiveButton(R.string.Ssave, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    repository.remove(note, new CallBack<Object>() {
+                                        @Override
+                                        public void onSucess(Object result) {
+                                            adapter.delteNote(note);
+                                        }
+                                    });
+                                    repository.add(textDialTitle.getText().toString(), date, textDialDesc.getText().toString(), new CallBack<Note>() {
+                                        @Override
+                                        public void onSucess(Note result) {
+                                            int index = adapter.add(result);
+                                            adapter.notifyItemRemoved(index);
+                                        }
+                                    });
+                                    adapter.notifyDataSetChanged();
+                                   router.showNotes();
+                                }
+                            });
+                    builderDetail.show();
+                    //MainActivity mainActivity = (MainActivity) NotesFragment.this.requireActivity();
+                    //mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.container, DetailFragment.newInstance(note)).addToBackStack(null).commit();
                 }
             }
         });
