@@ -1,24 +1,27 @@
 package com.example.note0107;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
-import com.example.note0107.menu_fragment.FragmentAbout;
-import com.example.note0107.menu_fragment.FragmentSettings;
-import com.example.note0107.menu_fragment.NotesFragmentAdd;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import static androidx.core.content.ContentProviderCompat.requireContext;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final NotesRepository repository = NotesFirebaseRepository.INSTANCE;
+    //private final Adapter notesAdapter = new Adapter(this);
 
     private Router router;
 
@@ -52,7 +55,32 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.action_add:
-                router.showAdd();
+
+                View view = LayoutInflater.from(this).inflate(R.layout.add_layout,  null, false);
+
+                EditText editTitle = view.findViewById(R.id.input_titleD);
+                EditText editDesc = view.findViewById(R.id.input_descriptionD);
+
+                SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                String date = format.format(Calendar.getInstance().getTime());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                        .setTitle(R.string.titleAddDialog)
+                        .setView(view)
+                        .setPositiveButton(R.string.Add, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                repository.add(String.valueOf(editTitle.getText()), date, String.valueOf(editDesc.getText()), new CallBack<Note>() {
+                                    @Override
+                                    public void onSucess(Note result) {
+
+                                    }
+                                });
+                                router.showNotes();
+                            }
+                        });
+                builder.show();
+                //router.showAdd();
                 return true;
             case R.id.about:
                 router.showInfo();

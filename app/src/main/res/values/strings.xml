@@ -15,4 +15,6 @@
     <string name="deleteMessage">Внимание!</string>
     <string name="btn_positive">Удалить</string>
     <string name="btn_negative">Отмена</string>
+    <string name="titleAddDialog">Заметка New</string>
+    <string name="Add">Сохранить</string>
 </resources>
