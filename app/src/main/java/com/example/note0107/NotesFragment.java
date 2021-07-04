@@ -83,8 +83,7 @@ public class NotesFragment extends Fragment {
                                 }
                             });
                     builderDetail.show();
-                    //MainActivity mainActivity = (MainActivity) NotesFragment.this.requireActivity();
-                    //mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.container, DetailFragment.newInstance(note)).addToBackStack(null).commit();
+
                 }
             }
         });
